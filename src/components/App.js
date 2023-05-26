@@ -7,6 +7,15 @@ function App() {
   const [items, setItems] = useState(itemData);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
+  function handleItemFormSubmit(formData) {
+    const itemExists = items.some((item) => item.name === formData.name);
+  if (itemExists) {
+    alert(`Item ${formData.name} already exists`)
+    return;
+  }
+    setItems((prevItems) => [...prevItems, formData]);
+  }
+
   function handleDarkModeClick() {
     setIsDarkMode((isDarkMode) => !isDarkMode);
   }
@@ -14,7 +23,7 @@ function App() {
   return (
     <div className={"App " + (isDarkMode ? "dark" : "light")}>
       <Header isDarkMode={isDarkMode} onDarkModeClick={handleDarkModeClick} />
-      <ShoppingList items={items} />
+      <ShoppingList items={items} onItemFormSubmit={handleItemFormSubmit} />
     </div>
   );
 }
